@@ -3,7 +3,7 @@ from h2o.automl import H2OAutoML
 import pandas as pd
 
 # Inicialización del servidor H2O
-h2o.init(min_memory_size=2)
+h2o.init(min_mem_size=2)
 
 # Función para cargar y limpiar datos
 def load_and_prepare_data(file_path):
