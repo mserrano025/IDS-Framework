@@ -76,7 +76,7 @@ for day_file in validation_days:
     print(f"Performance for {day_file}: {performance.auc()}")
 
     # Decidir si reentrenar
-    if performance.auc() < 0.95:  # Umbral de ejemplo
+    if float(performance.auc()) < 0.95:  # Umbral de ejemplo
         print(f"Retraining model for {day_file}")
         
         # Agregar datos del día al conjunto de entrenamiento
