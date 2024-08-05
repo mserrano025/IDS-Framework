@@ -3,7 +3,7 @@ from h2o.automl import H2OAutoML
 import pandas as pd
 
 # Inicialización del servidor H2O
-h2o.init(min_mem_size=2)
+h2o.init(ip='10.9.26.54', port=54321)
 
 # Función para cargar y limpiar datos
 def load_and_prepare_data(file_path):
@@ -72,11 +72,10 @@ for day_file in validation_days:
     valid = load_and_prepare_data(day_file)
 
     # Validar modelo actual
-    performance = best_model.model_performance(valid)
-    print(f"Performance for {day_file}: {performance.auc()}")
+    print(f"Performance for {day_file}: {best_model.mse(valid=True)}")
 
     # Decidir si reentrenar
-    if float(performance.auc()) < 0.95:  # Umbral de ejemplo
+    if float(best_model.mse(valid=True)) > 1:  # Umbral de ejemplo
         print(f"Retraining model for {day_file}")
         
         # Agregar datos del día al conjunto de entrenamiento
@@ -92,4 +91,4 @@ for day_file in validation_days:
         best_model_path = h2o.save_model(model=best_model, path="models", force=True)
 
 # Finalización del servidor H2O
-h2o.shutdown(prompt=False)
+h2o.cluster().shutdown(prompt=False)
