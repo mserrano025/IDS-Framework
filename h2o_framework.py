@@ -1,6 +1,7 @@
 import h2o
 from h2o.automl import H2OAutoML
 import pandas as pd
+from sklearn.metrics import accuracy_score
 
 # Inicialización del servidor H2O
 h2o.init(ip='10.9.26.54', port=54321)
@@ -70,12 +71,19 @@ validation_days = [
 for day_file in validation_days:
     # Cargar datos de validación
     valid = load_and_prepare_data(day_file)
+    
+    # Realizar predicciones
+    predictions = best_model.predict(valid)
 
-    # Validar modelo actual
-    print(f"Performance for {day_file}: {best_model.mse(valid=True)}")
+    # Convertir predicciones y etiquetas reales a formato de pandas para comparación
+    pred_df = predictions.as_data_frame()['predict']
+    actual_df = valid.as_data_frame()[response]
+
+    accuracy = accuracy_score(actual_df, pred_df)
+    print(f"Performance for {day_file}: Accuracy = {accuracy}")
 
     # Decidir si reentrenar
-    if float(best_model.mse(valid=True)) > 1:  # Umbral de ejemplo
+    if accuracy < 0.95:  # Umbral de ejemplo para retraining
         print(f"Retraining model for {day_file}")
         
         # Agregar datos del día al conjunto de entrenamiento
