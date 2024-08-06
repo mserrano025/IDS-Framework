@@ -47,10 +47,16 @@ response = "Label"
 
 # Función para entrenar modelo H2OAutoML
 def train_automl(train, valid=None, max_runtime_secs=60, checkpoint_model=None):
-    aml = H2OAutoML(max_runtime_secs=max_runtime_secs, seed=1234, verbosity="info",
-                    project_name='IDS_project', nfolds=0, keep_cross_validation_predictions=False,
-                    exclude_algos=['DeepLearning', 'StackedEnsemble'])
-    aml.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
+    #TODO: change the checkpoint philosophy, if it exists then load the checkpointed model,
+    if checkpoint_model:
+        #load checkpointed model from models folder
+        aml = h2o.load_model(checkpoint_model)
+        aml.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
+    else:
+        aml = H2OAutoML(max_runtime_secs=max_runtime_secs, seed=1234, verbosity="info",
+                        project_name='IDS_project', nfolds=0, keep_cross_validation_predictions=False,
+                        exclude_algos=['DeepLearning', 'StackedEnsemble'])
+        aml.train(x=predictors, y=response, training_frame=train, validation_frame=valid)
     return aml
 
 # Entrenamiento inicial del modelo
