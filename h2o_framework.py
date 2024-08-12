@@ -24,28 +24,29 @@ train_frames = [load_and_prepare_data(file) for file in train_files]
 train = train_frames[0].rbind(train_frames[1])  # Concatenar H2OFrames
 
 # Lista de predictores y respuesta
-predictors = [
-    "Destination Port", "Flow Duration", "Total Fwd Packets", "Total Backward Packets",
-    "Total Length of Fwd Packets", "Total Length of Bwd Packets", "Fwd Packet Length Max",
-    "Fwd Packet Length Min", "Fwd Packet Length Mean", "Fwd Packet Length Std",
-    "Bwd Packet Length Max", "Bwd Packet Length Min", "Bwd Packet Length Mean",
-    "Bwd Packet Length Std", "Flow Bytes/s", "Flow Packets/s", "Flow IAT Mean",
-    "Flow IAT Std", "Flow IAT Max", "Flow IAT Min", "Fwd IAT Total", "Fwd IAT Mean",
-    "Fwd IAT Std", "Fwd IAT Max", "Fwd IAT Min", "Bwd IAT Total", "Bwd IAT Mean",
-    "Bwd IAT Std", "Bwd IAT Max", "Bwd IAT Min", "Fwd PSH Flags", "Bwd PSH Flags",
-    "Fwd URG Flags", "Bwd URG Flags", "Fwd Header Length", "Bwd Header Length",
-    "Fwd Packets/s", "Bwd Packets/s", "Min Packet Length", "Max Packet Length",
-    "Packet Length Mean", "Packet Length Std", "Packet Length Variance", "FIN Flag Count",
-    "SYN Flag Count", "RST Flag Count", "PSH Flag Count", "ACK Flag Count",
-    "URG Flag Count", "CWE Flag Count", "ECE Flag Count", "Down/Up Ratio",
-    "Average Packet Size", "Avg Fwd Segment Size", "Avg Bwd Segment Size",
-    "Fwd Avg Bytes/Bulk", "Fwd Avg Packets/Bulk", "Fwd Avg Bulk Rate",
-    "Bwd Avg Bytes/Bulk", "Bwd Avg Packets/Bulk", "Bwd Avg Bulk Rate",
-    "Subflow Fwd Packets", "Subflow Fwd Bytes", "Subflow Bwd Packets",
-    "Subflow Bwd Bytes", "Init_Win_bytes_forward", "Init_Win_bytes_backward",
-    "act_data_pkt_fwd", "min_seg_size_forward", "Active Mean", "Active Std",
-    "Active Max", "Active Min", "Idle Mean", "Idle Std", "Idle Max", "Idle Min"
+predictors = ["Destination port", "Protocol", "Flow duration", "Total fwd packets", "Total backward packets",
+    "Total length of fwd packets", "Total length of bwd packets", "Fwd packet length max", 
+    "Fwd packet length min", "Fwd packet length mean", "Fwd packet length std", 
+    "Bwd packet length max", "Bwd packet length min", "Bwd packet length mean", 
+    "Bwd packet length std", "Flow bytes/s", "Flow packets/s", "Flow IAT mean", 
+    "Flow IAT std", "Flow IAT max", "Flow IAT min", "Fwd IAT total", "Fwd IAT mean", 
+    "Fwd IAT std", "Fwd IAT max", "Fwd IAT min", "Bwd IAT total", "Bwd IAT mean", 
+    "Bwd IAT std", "Bwd IAT max", "Bwd IAT min", "Fwd PSH flags", "Bwd PSH flags", 
+    "Fwd URG flags", "Bwd URG flags", "Fwd header length", "Bwd header length", 
+    "Fwd packets/s", "Bwd packets/s", "Min packet length", "Max packet length", 
+    "Packet length mean", "Packet length std", "Packet length variance", "FIN flag count", 
+    "SYN flag count", "RST flag count", "PSH flag count", "ACK flag count", 
+    "URG flag count", "CWE flag count", "ECE flag count", "Down/up ratio", 
+    "Average packet size", "Avg fwd segment size", "Avg bwd segment size", 
+    "Fwd header length", "Fwd avg bytes/bulk", "Fwd avg packets/bulk", 
+    "Fwd avg bulk rate", "Bwd avg bytes/bulk", "Bwd avg packets/bulk", 
+    "Bwd avg bulk rate", "Subflow fwd packets", "Subflow fwd bytes", 
+    "Subflow bwd packets", "Subflow bwd bytes", "Init_Win_bytes_forward", 
+    "Init_Win_bytes_backward", "act_data_pkt_fwd", "min_seg_size_forward", 
+    "Active mean", "Active std", "Active max", "Active min", "Idle mean", 
+    "Idle std", "Idle max", "Idle min"
 ]
+
 response = "Label"
 
 # Función para entrenar modelo H2OAutoML
