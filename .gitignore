@@ -1,3 +1,5 @@
 .venv/
 models/
 __pycache__/
+*.png
+model_metrics_log.csv
